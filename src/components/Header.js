@@ -8,6 +8,16 @@ export default function Header(props) {
           <h1>Small Shopping Cart</h1>
         </a>
       </div>
+      <>
+      <button
+            style={{
+              width: 100
+            }}
+      id=''
+      >
+        Add Form
+      </button>
+      </>
       <div>
         <a href="#/cart">
           Cart{' '}
