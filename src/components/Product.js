@@ -1,3 +1,4 @@
+import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 
 export default function Product(props) {
@@ -22,9 +23,8 @@ const generateCard = (type) => {
       <div>Price: ${product.price}</div>
       <div>Quantity: {product.quantity}</div>
       </>
-      break;
       case "consoles":
-        return <>
+        return<>
         <h3>Model:{product.model}</h3>
         <div>Manufacturer: {product.manufacturer}</div>
         <div>Memory: {product.memory_amount}</div>
@@ -33,7 +33,8 @@ const generateCard = (type) => {
         <div>Quantity: {product.quantity}</div>
         </>
       case "games":
-        return <>
+        console.log(product)
+        return<>
         <h3>Title: {product.title}</h3>
         <div>EsrbRating: {product.esrbRating}</div>
         <div>Description: {product.description}</div>
@@ -41,9 +42,9 @@ const generateCard = (type) => {
         <div>Price: ${product.price}</div>
         <div>Quantity: {product.quantity}</div>
         </>
-        break;
   }
 } 
+
 
 
   return (

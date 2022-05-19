@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import CartContainer from "./CartContainer";
 import GameStoreForm from "./GameStoreForm";
-import { useState } from "react";
 
 import SearchConsoles from "./SearchFilters/SearchConsoles";
 import SearchGames from "./SearchFilters/SearchGames";
@@ -13,21 +13,17 @@ export const GameStore = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [productType, setProductType] = useState("tshirts");
-  const [search, setSearch] = useState("");
   const [invoiceDetails, setInvoiceDetails] = useState({});
 
-  const [scopedProdcut, setScopedProduct] = useState({});
+  const [scopedProdcut, setScopedProduct] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetch(`https://gamestore-backend.herokuapp.com/${productType}`)
       .then((r) => r.json())
       .then((data) => setProducts(data));
-  }, [invoiceDetails]);
+  }, [invoiceDetails, productType,scopedProdcut]);
 
-  const handleSearch = (event) => {
-    setSearch(event.target.value);
-  };
 
   function notify({ action, product }) {
     switch (action) {
@@ -54,24 +50,6 @@ export const GameStore = () => {
     }
     setShowForm(false);
   }
-  // function handleChange(evt) {
-  //   const clone = { ...products };
-  //   clone[evt.target.name] = evt.target.value;
-  //   setProductType(productType);
-  // }
-  // const productSwitch = (type) => {
-  //   switch(type) {
-  //     case "tshirts":
-  //       setProductType("tshirts")
-  //       break;
-  //     case "consoles":
-  //       setProductType("consoles")
-  //       break;
-  //     case "games":
-  //       setProductType("games")
-  //       break;
-  //   }
-  // }
 
     console.log(products);
 
@@ -79,16 +57,6 @@ export const GameStore = () => {
     setProductType(event.target.value);
   };
 
-  function addClick() {
-    setScopedProduct({
-      size: "",
-      price: "",
-      color: "",
-      description: "",
-      quantity: "",
-    });
-    setShowForm(true);
-  }
   if (showForm) {
     return (
       <GameStoreForm
@@ -126,8 +94,67 @@ export const GameStore = () => {
     }
   };
 
-      
-      
+function formSwitch(type){
+  switch(type){
+    case "consoles":        
+    return <button
+    style={{ width: 100 }}
+    className="btn btn-primary"
+    type="button"
+    onClick={addConsoles}
+  >Add Consoles</button>
+  case "games":        
+  return <button
+    style={{ width: 100 }}
+    className="btn btn-primary"
+    type="button"
+    onClick={addGames}
+  >Add Games</button>
+  case "tshirts":        
+  return <button
+    style={{ width: 100 }}
+    className="btn btn-primary"
+    type="button"
+    onClick={addTshirts}
+  >Add Tshirts</button>
+  }
+}
+
+function addConsoles(){
+  setScopedProduct({
+    model: "",
+    manufacturer: "",
+    memory_amount: "",
+    processor: "",
+    price: "",
+    quantity: "",
+  });
+  setShowForm(true);
+}
+function addGames(){
+  setScopedProduct({
+    title: "",
+    esrbRating: "",
+    description: "",
+    studio: "",
+    price: "",
+    quantity: "",
+  });
+  setShowForm(true);
+}
+function addTshirts() {
+    setScopedProduct({
+      size: "",
+      price: "",
+      color: "",
+      description: "",
+      quantity: "",
+    });
+    setShowForm(true);
+}
+if (showForm) {
+  return <GameStoreForm productType={productType} product={scopedProdcut} notify={notify} />;
+}
 
   const renderFilterOptions = () => {
     switch (productType) {
@@ -152,14 +179,7 @@ export const GameStore = () => {
         setShowForm={setShowForm}
       ></Header>
       {/* Review */}
-      <button
-        style={{ width: 100 }}
-        className="btn btn-primary"
-        type="button"
-        onClick={addClick}
-      >
-        Add Form
-      </button>
+      {formSwitch(productType)}
       {/* <form onSubmit={handleSubmit}> */}
       <select value={productType} onChange={handleSelect}>
         <option value="tshirts">T-Shirts</option>
@@ -173,10 +193,7 @@ export const GameStore = () => {
       </div>
       <div className="row">
         <Main
-          products={products}
-          onAdd={onAdd}
-          productType={productType}
-          notify={notify}
+          setProductType={setProductType} products={products} onAdd={onAdd} productType={productType} notify={notify}
         ></Main>
         <CartContainer
           setInvoiceDetails={setInvoiceDetails}
