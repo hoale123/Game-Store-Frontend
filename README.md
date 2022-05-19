@@ -17,3 +17,11 @@
 
 ## Description
 **Game Store Frontend** is a front-end application for the Game store API (https://github.com/inklein1997/M4-Summative-Hoa-Le).
+
+## Technologies
+- React
+
+## Contributors
+[<img src="https://avatars.githubusercontent.com/u/93157433?v=4" width="75" height="75">](https://github.com/inklein1997)
+[<img src="https://avatars.githubusercontent.com/u/47269779?v=4" width="75" height="75">](https://github.com/hoale123)
+[<img src="https://avatars.githubusercontent.com/u/87605893?v=4" width="75" height="75">](https://github.com/Honorinenn)
