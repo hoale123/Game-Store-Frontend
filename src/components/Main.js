@@ -7,6 +7,7 @@ export default function Main(props) {
     <main className="block col-2">
       <h2>Products</h2>
       <div className="row">
+        {products.length == 0 && <p>There are no products matching your filters.  Please reset your filters or add a product.</p>}
         {products.map((product) => (
           <Product key={product.id} product={product} onAdd={onAdd} productType={productType} notify={notify}></Product>
         

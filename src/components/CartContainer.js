@@ -19,6 +19,10 @@ function CartContainer(props) {
 
     let type = productType.charAt(0).toUpperCase() + productType.slice(1);
 
+    if (type == "Tshirts") {
+      type = "T-shirts"
+    }
+
     let invoiceInput = {
       ...personalInfo,
       quantity: cartItems[0].qty,
@@ -30,13 +34,19 @@ function CartContainer(props) {
 
     console.log(JSON.stringify(invoiceInput));
 
-    fetch(`http://localhost:8080/invoices`, {
+    console.log(invoiceInput)
+
+    fetch(`https://gamestore-backend.herokuapp.com/invoices`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(invoiceInput),
     })
       .then((res) => res.json())
-      .then((d) => setInvoiceDetails(d));
+      .then((d) => {
+        console.log(d);
+        setInvoiceDetails(d);
+      })
+      .catch((e) => console.error(e));
   };
 
   return (
