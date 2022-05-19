@@ -9,7 +9,7 @@ import { useState } from 'react';
 export const GameStore = () => {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-    const [productType, setProductType] = useState("tshirts");
+    const [productType, setProductType] = useState("games");
 
   const [scopedProdcut, setScopedProduct] = useState({});
   const [showForm, setShowForm] = useState(false);

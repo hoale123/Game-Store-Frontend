@@ -16,30 +16,30 @@ const generateCard = (type) => {
   switch(type) {
     case "tshirts":
       return <>
-      <h3>{product.size}</h3>
-      <div>{product.color}</div>
-      <div>{product.description}</div>
-      <div>${product.price}</div>
-      <div>{product.quantity}</div>
+      <h3>Size: {product.size}</h3>
+      <div>Color: {product.color}</div>
+      <div>Description: {product.description}</div>
+      <div>Price: ${product.price}</div>
+      <div>Quantity: {product.quantity}</div>
       </>
       break;
       case "consoles":
         return <>
-        <h3>{product.model}</h3>
-        <div>${product.manufacturer}</div>
-        <div>{product.memory_amount}</div>
-        <div>{product.processor}</div>
-        <div>{product.price}</div>
-        <div>{product.quantity}</div>
+        <h3>Model:{product.model}</h3>
+        <div>Manufacturer: {product.manufacturer}</div>
+        <div>Memory: {product.memory_amount}</div>
+        <div>Processor: {product.processor}</div>
+        <div>Price: ${product.price}</div>
+        <div>Quantity: {product.quantity}</div>
         </>
       case "games":
         return <>
-        <h3>{product.title}</h3>
-        <div>${product.esrbRating}</div>
-        <div>{product.description}</div>
-        <div>{product.studio}</div>
-        <div>{product.price}</div>
-        <div>{product.quantity}</div>
+        <h3>Title: {product.title}</h3>
+        <div>EsrbRating: {product.esrbRating}</div>
+        <div>Description: {product.description}</div>
+        <div>Studio: {product.studio}</div>
+        <div>Price: ${product.price}</div>
+        <div>Quantity: {product.quantity}</div>
         </>
         break;
   }
