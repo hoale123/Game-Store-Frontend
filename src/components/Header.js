@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default function Header(props) {
+  
+
   return (
     <header className="block row center">
       <div>
@@ -9,14 +11,14 @@ export default function Header(props) {
         </a>
       </div>
       <>
-      <button
-            style={{
-              width: 100
-            }}
-      id=''
+      {/* <button
+        style={{width: 100}}
+        className="btn btn-primary" 
+        type="button" 
+        onClick={addClick}
       >
         Add Form
-      </button>
+      </button> */}
       </>
       <div>
         <a href="#/cart">

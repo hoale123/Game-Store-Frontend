@@ -7,15 +7,12 @@ import GameStoreForm from './GameStoreForm';
 import { useState } from 'react';
 
 export const GameStore = () => {
-  const {product} = data
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-    const [loadData, setLoadData] = useState([]);
     const [productType, setProductType] = useState("tshirts");
 
   const [scopedProdcut, setScopedProduct] = useState({});
   const [showForm, setShowForm] = useState(false);
-
 
 useEffect(() => {
   fetch(`http://localhost:8080/${productType}`)
@@ -27,12 +24,15 @@ useEffect(() => {
 function notify({action, product}){
 
   switch (action){
+    case "add":
+      setProducts([...products, product]);
+      break;
     case "delete":
       setProducts(products.filter((e) => e.id !== product.id))
       break;
     case "edit":
       setProducts(
-        product.map((e) => {
+        products.map((e) => {
           if (e.id === product.id) {
             return product;
           }
@@ -48,8 +48,19 @@ function notify({action, product}){
   setShowForm(false)
 }
 
+
+function addClick() {
+  setScopedProduct({
+    size: "",
+    price: "",
+    color: "",
+    description: "",
+    quantity: "",
+  });
+  setShowForm(true);
+}
 if (showForm) {
-  return <GameStoreForm product={setScopedProduct} notify={notify} />;
+  return <GameStoreForm productType={productType} product={scopedProdcut} notify={notify} />;
 }
 
 
@@ -83,7 +94,11 @@ if (showForm) {
     };
     return (
       <div className="App">
-        <Header countCartItems={cartItems.length}></Header>
+        <Header addClick={addClick} countCartItems={cartItems.length} setScopedProduct={setScopedProduct} setShowForm={setShowForm}></Header>
+        {/* Review */}
+        <button style={{width: 100}} className="btn btn-primary" type="button" onClick={addClick}>
+        Add Form
+        </button>
         <div className="row">
           <Main products={products} onAdd={onAdd} productType={productType} notify={notify}></Main>
           <CartContainer
