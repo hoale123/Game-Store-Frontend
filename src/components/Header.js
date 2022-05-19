@@ -6,21 +6,13 @@ export default function Header(props) {
   return (
     <header className="block row center">
       <div>
-        <a href="#/">
-          <h1>Small Shopping Cart</h1>
-        </a>
+        {/* <a href="#/"> */}
+          <h1>Game Store</h1>
+        {/* </a> */}
       </div>
       <>
-      {/* <button
-        style={{width: 100}}
-        className="btn btn-primary" 
-        type="button" 
-        onClick={addClick}
-      >
-        Add Form
-      </button> */}
       </>
-      <div>
+      {/* <div>
         <a href="#/cart">
           Cart{' '}
           {props.countCartItems ? (
@@ -29,7 +21,7 @@ export default function Header(props) {
             ''
           )}
         </a>{' '}
-      </div>
+      </div> */}
     </header>
   );
 }

@@ -17,12 +17,31 @@ const generateCard = (type) => {
     case "tshirts":
       return <>
       <h3>{product.size}</h3>
-      <div>${product.price}</div>
       <div>{product.color}</div>
       <div>{product.description}</div>
+      <div>${product.price}</div>
       <div>{product.quantity}</div>
       </>
-      // case "consoles"
+      break;
+      case "consoles":
+        return <>
+        <h3>{product.model}</h3>
+        <div>${product.manufacturer}</div>
+        <div>{product.memory_amount}</div>
+        <div>{product.processor}</div>
+        <div>{product.price}</div>
+        <div>{product.quantity}</div>
+        </>
+      case "games":
+        return <>
+        <h3>{product.title}</h3>
+        <div>${product.esrbRating}</div>
+        <div>{product.description}</div>
+        <div>{product.studio}</div>
+        <div>{product.price}</div>
+        <div>{product.quantity}</div>
+        </>
+        break;
   }
 } 
 

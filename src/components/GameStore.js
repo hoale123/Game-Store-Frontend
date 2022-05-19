@@ -64,10 +64,6 @@ if (showForm) {
 }
 
 
-
-
-
-
     const onAdd = (product) => {
       const exist = cartItems.find((x) => x.id === product.id);
       if (exist) {
@@ -94,7 +90,7 @@ if (showForm) {
     };
     return (
       <div className="App">
-        <Header addClick={addClick} countCartItems={cartItems.length} setScopedProduct={setScopedProduct} setShowForm={setShowForm}></Header>
+        <Header showForm={showForm} productType={productType}  notify={notify} scopedProdcut={scopedProdcut}  countCartItems={cartItems.length} setScopedProduct={setScopedProduct} setShowForm={setShowForm}></Header>
         {/* Review */}
         <button style={{width: 100}} className="btn btn-primary" type="button" onClick={addClick}>
         Add Form
