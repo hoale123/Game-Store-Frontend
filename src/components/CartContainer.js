@@ -10,7 +10,6 @@ function CartContainer(props) {
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const shippingPrice = itemsPrice > 2000 ? 0 : 20;
-  const totalPrice = itemsPrice + taxPrice + shippingPrice;
 
   const generateInvoice = () => {
     console.log("submitted");
@@ -19,7 +18,7 @@ function CartContainer(props) {
 
     let type = productType.charAt(0).toUpperCase() + productType.slice(1);
 
-    if (type == "Tshirts") {
+    if (type === "Tshirts") {
       type = "T-shirts"
     }
 
