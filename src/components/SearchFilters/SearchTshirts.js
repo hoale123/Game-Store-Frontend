@@ -6,31 +6,31 @@ const SearchTshirts = ({ setProducts }) => {
   const [allShirtData, setAllShirtData] = useState([]);
 
   useEffect(() => {
-      fetch("https://gamestore-backend.herokuapp.com/tshirts")
+      fetch("http://localhost:8080/tshirts")
         .then((r) => r.json())
         .then((d) => setAllShirtData(d));
         console.log(selectedSize, selectedColor)
 
     if (selectedColor !== "" && selectedSize !== "") {
       fetch(
-        `https://gamestore-backend.herokuapp.com/tshirts?color=${selectedColor}&size=${selectedSize}`
+        `http://localhost:8080/tshirts?color=${selectedColor}&size=${selectedSize}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else if (selectedColor !== "") {
       fetch(
-        `https://gamestore-backend.herokuapp.com/tshirts?color=${selectedColor}`
+        `http://localhost:8080/tshirts?color=${selectedColor}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else if (selectedSize !== "") {
       fetch(
-        `https://gamestore-backend.herokuapp.com/tshirts?size=${selectedSize}`
+        `http://localhost:8080/tshirts?size=${selectedSize}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else {
-      fetch("https://gamestore-backend.herokuapp.com/tshirts")
+      fetch("http://localhost:8080/tshirts")
         .then((r) => r.json())
         .then((d) => setProducts(d));
     }

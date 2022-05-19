@@ -5,7 +5,7 @@ const SearchConsoles = ({setProducts}) => {
   const [allConsoleData, setAllConsoleData] = useState([]);
 
   useEffect(() => {
-      fetch("https://gamestore-backend.herokuapp.com/consoles")
+      fetch("http://localhost:8080/consoles")
         .then((r) => r.json())
         .then((d) => {
           console.log(d);
@@ -14,12 +14,12 @@ const SearchConsoles = ({setProducts}) => {
 
     if (selectedManufacturer) {
       fetch(
-        `https://gamestore-backend.herokuapp.com/consoles?manufacturer=${selectedManufacturer}`
+        `http://localhost:8080/consoles?manufacturer=${selectedManufacturer}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else {
-      fetch("https://gamestore-backend.herokuapp.com/consoles")
+      fetch("http://localhost:8080/consoles")
         .then((r) => r.json())
         .then((d) => setProducts(d));
     }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const GameStoreForm = ({ product: intitalProduct, notify,productType }) => {
   const [product, setProduct] = useState(intitalProduct);
-  const isAdd = intitalProduct.price === 0;
+  const isAdd = intitalProduct.price === "";
 
   function handleChange(evt) {
     const clone = { ...product };
@@ -13,18 +13,51 @@ const GameStoreForm = ({ product: intitalProduct, notify,productType }) => {
       function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = isAdd ? `https://gamestore-backend.herokuapp.com/${productType}` : `https://gamestore-backend.herokuapp.com/${productType}/${product.id}`;
+        const url = isAdd ? `http://localhost:8080/${productType}` : `http://localhost:8080/${productType}/${product.id}`;
         const method = isAdd ? "POST" : "PUT";
         const expectedStatus = isAdd ? 201 : 204;
-
-        const init = {
-            method,
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(product)
-        };
+let init;
+        switch (productType){
+            case "tshirts":
+                 init = {
+                    method,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(product) }
+                    break;
+            default:
+                 init = isAdd ? {
+                    method,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({...product,id:1})
+                } : {
+                    method,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(product) }
+        }
+        // const init = isAdd ? {
+        //     method,
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Accept": "application/json"
+        //     },
+        //     body: JSON.stringify({...product,id:1})
+        // } : {
+        //     method,
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Accept": "application/json"
+        //     },
+        //     body: JSON.stringify(product) }
+        // ;
 
         fetch(url, init)
         .then(response => {
@@ -36,6 +69,7 @@ const GameStoreForm = ({ product: intitalProduct, notify,productType }) => {
                     return product;
                 }
             }
+            return Promise.reject(`Didn't receive expected status: ${expectedStatus}`);
         })
         .then(result => notify({
             action: isAdd ? "add" : "edit",

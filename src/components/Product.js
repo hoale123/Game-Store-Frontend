@@ -7,7 +7,7 @@ export default function Product(props) {
   function handleDelete() {
     console.log(product)
     fetch(
-      `https://gamestore-backend.herokuapp.com/${productType}/${product.id}`,
+      `http://localhost:8080/${productType}/${product.id}`,
       { method: "DELETE" }
     )
       .then(() => notify({ action: "delete", product: product }))

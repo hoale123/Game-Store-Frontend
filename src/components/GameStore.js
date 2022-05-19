@@ -12,14 +12,14 @@ import SearchTshirts from "./SearchFilters/SearchTshirts";
 export const GameStore = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [productType, setProductType] = useState("tshirts");
+  const [productType, setProductType] = useState("games");
   const [invoiceDetails, setInvoiceDetails] = useState({});
 
-  const [scopedProdcut, setScopedProduct] = useState("");
+  const [scopedProdcut, setScopedProduct] = useState({});
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    fetch(`https://gamestore-backend.herokuapp.com/${productType}`)
+    fetch(`http://localhost:8080/${productType}`)
       .then((r) => r.json())
       .then((data) => setProducts(data));
   }, [invoiceDetails, productType,scopedProdcut]);
