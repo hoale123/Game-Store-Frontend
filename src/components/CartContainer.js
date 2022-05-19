@@ -36,7 +36,7 @@ function CartContainer(props) {
 
     console.log(invoiceInput)
 
-    fetch(`http://localhost:8080/invoices`, {
+    fetch(`https://gamestore-backend.herokuapp.com/invoices`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(invoiceInput),

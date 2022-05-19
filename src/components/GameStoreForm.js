@@ -13,7 +13,7 @@ const GameStoreForm = ({ product: intitalProduct, notify,productType }) => {
       function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = isAdd ? `http://localhost:8080/${productType}` : `http://localhost:8080/${productType}/${product.id}`;
+        const url = isAdd ? `https://gamestore-backend.herokuapp.com/${productType}` : `https://gamestore-backend.herokuapp.com/${productType}/${product.id}`;
         const method = isAdd ? "POST" : "PUT";
         const expectedStatus = isAdd ? 201 : 204;
 let init;
@@ -43,21 +43,6 @@ let init;
                     },
                     body: JSON.stringify(product) }
         }
-        // const init = isAdd ? {
-        //     method,
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json"
-        //     },
-        //     body: JSON.stringify({...product,id:1})
-        // } : {
-        //     method,
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json"
-        //     },
-        //     body: JSON.stringify(product) }
-        // ;
 
         fetch(url, init)
         .then(response => {
@@ -69,7 +54,6 @@ let init;
                     return product;
                 }
             }
-            return Promise.reject(`Didn't receive expected status: ${expectedStatus}`);
         })
         .then(result => notify({
             action: isAdd ? "add" : "edit",

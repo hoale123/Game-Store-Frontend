@@ -9,30 +9,30 @@ const SearchGames = ({ setProducts }) => {
   const [allGameData, setAllGameData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/games")
+    fetch("https://gamestore-backend.herokuapp.com/games")
       .then((r) => r.json())
       .then((d) => setAllGameData(d));
 
     if (selectedStudio !== "" && selectedEsrbRating !== "") {
       fetch(
-        `http://localhost:8080/games?studio=${selectedStudio}&esrbRating=${selectedEsrbRating}`
+        `https://gamestore-backend.herokuapp.com/games?studio=${selectedStudio}&esrbRating=${selectedEsrbRating}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else if (selectedStudio !== "") {
       fetch(
-        `http://localhost:8080/games?studio=${selectedStudio}`
+        `https://gamestore-backend.herokuapp.com/games?studio=${selectedStudio}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else if (selectedEsrbRating !== "") {
       fetch(
-        `http://localhost:8080/games?esrbRating=${selectedEsrbRating}`
+        `https://gamestore-backend.herokuapp.com/games?esrbRating=${selectedEsrbRating}`
       )
         .then((r) => r.json())
         .then((d) => setProducts(d));
     } else {
-      fetch("http://localhost:8080/games")
+      fetch("https://gamestore-backend.herokuapp.com/games")
         .then((r) => r.json())
         .then((d) => setProducts(d));
     }
@@ -66,7 +66,7 @@ const SearchGames = ({ setProducts }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     fetch(
-      `http://localhost:8080/games/title/${inputtedTitle}`
+      `https://gamestore-backend.herokuapp.com/games/title/${inputtedTitle}`
     )
       .then((r) => r.json())
       .then((d) => setProducts([d]));

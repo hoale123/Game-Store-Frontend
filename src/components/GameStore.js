@@ -15,11 +15,11 @@ export const GameStore = () => {
   const [productType, setProductType] = useState("games");
   const [invoiceDetails, setInvoiceDetails] = useState({});
 
-  const [scopedProdcut, setScopedProduct] = useState({});
+  const [scopedProdcut, setScopedProduct] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/${productType}`)
+    fetch(`https://gamestore-backend.herokuapp.com/${productType}`)
       .then((r) => r.json())
       .then((data) => setProducts(data));
   }, [invoiceDetails, productType,scopedProdcut]);
@@ -119,7 +119,6 @@ function formSwitch(type){
   >Add Tshirts</button>
   }
 }
-
 function addConsoles(){
   setScopedProduct({
     model: "",
