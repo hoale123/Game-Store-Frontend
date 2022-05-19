@@ -13,3 +13,7 @@
 - [Contribution](#Contribution)
 - [Acknowledgements](#Acknowledgements)
 - [Questions](#Questions)
+
+
+## Description
+**Game Store Frontend** is a front-end application for the Game store API (https://github.com/inklein1997/M4-Summative-Hoa-Le).
