@@ -2,23 +2,33 @@ import React, { useEffect } from 'react'
 import Header from './Header';
 import Main from './Main';
 import CartContainer from './CartContainer';
-import data from '../data';
 import GameStoreForm from './GameStoreForm';
 import { useState } from 'react';
 
 export const GameStore = () => {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-    const [productType, setProductType] = useState("games");
+    const [productType, setProductType] = useState("tshirts");
+    const [search, setSearch] = useState("");
 
   const [scopedProdcut, setScopedProduct] = useState({});
   const [showForm, setShowForm] = useState(false);
 
 useEffect(() => {
-  fetch(`http://localhost:8080/${productType}`)
+  fetch(`https://gamestore-backend.herokuapp.com/${productType}`)
   .then(r => r.json())
   .then(data => setProducts(data))
 },[])
+
+const handleSearch = (event) => {
+  setSearch(event.target.value);
+};
+
+const filteredProducts = products.filter(
+  product =>
+  product.color.toLowerCase().includes(search.toLocaleLowerCase())||
+  product.size.toLowerCase().includes(search.toLocaleLowerCase())
+);
 
 
 function notify({action, product}){
@@ -47,7 +57,27 @@ function notify({action, product}){
   }
   setShowForm(false)
 }
-
+// function handleChange(evt) {
+//   const clone = { ...products };
+//   clone[evt.target.name] = evt.target.value;
+//   setProductType(productType);
+// }
+// const productSwitch = (type) => {
+//   switch(type) {
+//     case "tshirts":
+//       setProductType("tshirts")
+//       break;
+//     case "consoles":
+//       setProductType("consoles")
+//       break;
+//     case "games":
+//       setProductType("games")
+//       break;
+//   }
+// } 
+const handleSelect = (event) => {
+  setProductType(event.target.value);
+};
 
 function addClick() {
   setScopedProduct({
@@ -95,8 +125,24 @@ if (showForm) {
         <button style={{width: 100}} className="btn btn-primary" type="button" onClick={addClick}>
         Add Form
         </button>
+        {/* <form onSubmit={handleSubmit}> */}
+        <select value={productType} onChange={handleSelect}>
+        <option value='tshirts'>T-Shirts</option>
+        <option value='games'>Games</option>
+        <option value='consoles'>consoles</option>
+      </select>
+        {/* </form> */}
+        <div className="searchbar">
+      <label htmlFor="search">Search Products:</label>
+      <input
+        type="text"
+        id="search"
+        placeholder="Type a product name to search..."
+        onChange={handleSearch}
+      />
+    </div>
         <div className="row">
-          <Main products={products} onAdd={onAdd} productType={productType} notify={notify}></Main>
+          <Main products={filteredProducts} onAdd={onAdd} productType={productType} notify={notify}></Main>
           <CartContainer
             cartItems={cartItems}
             onAdd={onAdd}

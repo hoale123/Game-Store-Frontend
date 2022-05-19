@@ -13,7 +13,7 @@ const GameStoreForm = ({ product: intitalProduct, notify,productType }) => {
       function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = isAdd ? `http://localhost:8080/${productType}` : `http://localhost:8080/${productType}/${product.id}`;
+        const url = isAdd ? `https://gamestore-backend.herokuapp.com/${productType}` : `https://gamestore-backend.herokuapp.com/${productType}/${product.id}`;
         const method = isAdd ? "POST" : "PUT";
         const expectedStatus = isAdd ? 201 : 204;
 
