@@ -10,6 +10,8 @@ export const GameStore = () => {
     const [cartItems, setCartItems] = useState([]);
     const [productType, setProductType] = useState("tshirts");
     const [search, setSearch] = useState("");
+    const [invoiceDetails, setInvoiceDetails] = useState({});
+
 
   const [scopedProdcut, setScopedProduct] = useState({});
   const [showForm, setShowForm] = useState(false);
@@ -18,7 +20,7 @@ useEffect(() => {
   fetch(`https://gamestore-backend.herokuapp.com/${productType}`)
   .then(r => r.json())
   .then(data => setProducts(data))
-},[])
+},[invoiceDetails])
 
 const handleSearch = (event) => {
   setSearch(event.target.value);
@@ -102,7 +104,7 @@ if (showForm) {
             x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
           )
         );
-      } else {
+      } else if (cartItems.length == 0){
         setCartItems([...cartItems, { ...product, qty: 1 }]);
       }
     };
@@ -120,10 +122,23 @@ if (showForm) {
     };
     return (
       <div className="App">
-        <Header showForm={showForm} productType={productType}  notify={notify} scopedProdcut={scopedProdcut}  countCartItems={cartItems.length} setScopedProduct={setScopedProduct} setShowForm={setShowForm}></Header>
+        <Header
+          showForm={showForm}
+          productType={productType}
+          notify={notify}
+          scopedProdcut={scopedProdcut}
+          countCartItems={cartItems.length}
+          setScopedProduct={setScopedProduct}
+          setShowForm={setShowForm}
+        ></Header>
         {/* Review */}
-        <button style={{width: 100}} className="btn btn-primary" type="button" onClick={addClick}>
-        Add Form
+        <button
+          style={{ width: 100 }}
+          className="btn btn-primary"
+          type="button"
+          onClick={addClick}
+        >
+          Add Form
         </button>
         {/* <form onSubmit={handleSubmit}> */}
         <select value={productType} onChange={handleSelect}>
@@ -144,6 +159,9 @@ if (showForm) {
         <div className="row">
           <Main products={filteredProducts} onAdd={onAdd} productType={productType} notify={notify}></Main>
           <CartContainer
+            setInvoiceDetails={setInvoiceDetails}
+            invoiceDetails={invoiceDetails}
+            productType={productType}
             cartItems={cartItems}
             onAdd={onAdd}
             onRemove={onRemove}

@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import InvoiceForm from "./InvoiceForm";
 
-function CartContainer( props) {
-  const { cartItems, onAdd, onRemove } = props;
+import Invoice from "./Invoice"
+
+function CartContainer(props) {
+  const [personalInfo, setPersonalInfo] = useState({});
+
+  const { cartItems, onAdd, onRemove, productType, setInvoiceDetails, invoiceDetails } = props;
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const shippingPrice = itemsPrice > 2000 ? 0 : 20;
   const totalPrice = itemsPrice + taxPrice + shippingPrice;
+
+  const generateInvoice = () => {
+    console.log("submitted");
+    console.log(cartItems);
+    console.log(personalInfo);
+
+    let type = productType.charAt(0).toUpperCase() + productType.slice(1);
+
+    let invoiceInput = {
+      ...personalInfo,
+      quantity: cartItems[0].qty,
+      item_type: type,
+      unit_price: cartItems[0].price,
+      item_id: cartItems[0].id,
+      invoice_id: 1
+    };
+
+    console.log(JSON.stringify(invoiceInput));
+
+    fetch(`http://localhost:8080/invoices`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(invoiceInput),
+    })
+      .then((res) => res.json())
+      .then((d) => setInvoiceDetails(d));
+  };
+
   return (
     <aside className="block col-1">
       <h2>Cart Items</h2>
@@ -17,7 +50,7 @@ function CartContainer( props) {
             <div className="col-2">
               <button onClick={() => onRemove(item)} className="remove">
                 -
-              </button>{' '}
+              </button>{" "}
               <button onClick={() => onAdd(item)} className="add">
                 +
               </button>
@@ -29,25 +62,29 @@ function CartContainer( props) {
           </div>
         ))}
 
+        <InvoiceForm
+          setPersonalInfo={setPersonalInfo}
+          personalInfo={personalInfo}
+        />
         {cartItems.length !== 0 && (
           <>
-            <hr></hr>
+            {/* <hr></hr>
             <div className="row">
               <div className="col-2">Items Price</div>
               <div className="col-1 text-right">${itemsPrice.toFixed(2)}</div>
-            </div>
-            <div className="row">
+            </div> */}
+            {/* <div className="row">
               <div className="col-2">Tax Price</div>
               <div className="col-1 text-right">${taxPrice.toFixed(2)}</div>
-            </div>
-            <div className="row">
+            </div> */}
+            {/* <div className="row">
               <div className="col-2">Shipping Price</div>
               <div className="col-1 text-right">
                 ${shippingPrice.toFixed(2)}
               </div>
-            </div>
+            </div> */}
 
-            <div className="row">
+            {/* <div className="row">
               <div className="col-2">
                 <strong>Total Price</strong>
               </div>
@@ -55,15 +92,14 @@ function CartContainer( props) {
                 <strong>${totalPrice.toFixed(2)}</strong>
               </div>
             </div>
-            <hr />
+            <hr /> */}
             <div className="row">
-              <button onClick={() => alert('Implement Checkout!')}>
-                Checkout
-              </button>
+              <button onClick={generateInvoice}>Checkout</button>
             </div>
           </>
         )}
       </div>
+      {invoiceDetails.invoice_id && <Invoice  invoiceDetails={invoiceDetails}/>}
     </aside>
   );
 }
