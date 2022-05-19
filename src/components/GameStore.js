@@ -10,6 +10,8 @@ export const GameStore = () => {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [productType, setProductType] = useState("games");
+    const [invoiceDetails, setInvoiceDetails] = useState({});
+
 
   const [scopedProdcut, setScopedProduct] = useState({});
   const [showForm, setShowForm] = useState(false);
@@ -18,7 +20,7 @@ useEffect(() => {
   fetch(`http://localhost:8080/${productType}`)
   .then(r => r.json())
   .then(data => setProducts(data))
-},[])
+},[invoiceDetails])
 
 
 function notify({action, product}){
@@ -72,7 +74,7 @@ if (showForm) {
             x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
           )
         );
-      } else {
+      } else if (cartItems.length == 0){
         setCartItems([...cartItems, { ...product, qty: 1 }]);
       }
     };
@@ -90,14 +92,35 @@ if (showForm) {
     };
     return (
       <div className="App">
-        <Header showForm={showForm} productType={productType}  notify={notify} scopedProdcut={scopedProdcut}  countCartItems={cartItems.length} setScopedProduct={setScopedProduct} setShowForm={setShowForm}></Header>
+        <Header
+          showForm={showForm}
+          productType={productType}
+          notify={notify}
+          scopedProdcut={scopedProdcut}
+          countCartItems={cartItems.length}
+          setScopedProduct={setScopedProduct}
+          setShowForm={setShowForm}
+        ></Header>
         {/* Review */}
-        <button style={{width: 100}} className="btn btn-primary" type="button" onClick={addClick}>
-        Add Form
+        <button
+          style={{ width: 100 }}
+          className="btn btn-primary"
+          type="button"
+          onClick={addClick}
+        >
+          Add Form
         </button>
         <div className="row">
-          <Main products={products} onAdd={onAdd} productType={productType} notify={notify}></Main>
+          <Main
+            products={products}
+            onAdd={onAdd}
+            productType={productType}
+            notify={notify}
+          ></Main>
           <CartContainer
+            setInvoiceDetails={setInvoiceDetails}
+            invoiceDetails={invoiceDetails}
+            productType={productType}
             cartItems={cartItems}
             onAdd={onAdd}
             onRemove={onRemove}
